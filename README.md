@@ -1,3 +1,13 @@
+# Proof of Concept
+
+Can I fetch a list of people and display a profile for each person using Svelte?
+
+Deployed site link is in the About section of the GitHub repo.
+
+Built using instructions from svelte.dev
+
+Default README below:
+
 # Svelte + Vite
 
 This template should help get you started developing with Svelte in Vite.
