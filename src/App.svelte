@@ -1,23 +1,23 @@
 <script>
   import logo from './assets/svelte.png'
   import Team from './lib/Team.svelte'
+
+  let teamNumber = 1;
+
 </script>
 
 <main>
   <img src={logo} alt="Svelte Logo" />
   <h1>Hello world!</h1>
 
-  <Team id="2" />
+  <form on:submit|preventDefault>
+    <label for="teamNo">Which team number to display (there are only 2 in this data set):</label>
+    <input type="number" id="teamNo" name="teamNo" bind:value={teamNumber} min="1" max="2" >
+  </form>
 
-  <p>
-    Visit <a href="https://svelte.dev">svelte.dev</a> to learn how to build Svelte
-    apps.
-  </p>
+  <p>{teamNumber}</p>
+  <Team {teamNumber} />
 
-  <p>
-    Check out <a href="https://github.com/sveltejs/kit#readme">SvelteKit</a> for
-    the officially supported framework, also powered by Vite!
-  </p>
 </main>
 
 <style>

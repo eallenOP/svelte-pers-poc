@@ -1,16 +1,19 @@
 <script>
+import { get } from 'svelte/store';
+import { afterUpdate } from 'svelte';
+
     // The Person component gets the individual and displays their id and name
     import Person from './Person.svelte'
 
     // Prop to specify which team to get
-    export let id;
+   export let teamNumber;
+   
+   // Free API for testing: https://reqres.in/
+   let endpoint = `https://reqres.in/api/users?page=${teamNumber}`;
 
-    // Free API for testing: https://reqres.in/
-    const endpoint = `https://reqres.in/api/users?page=${id}`;
-  
     // Doing it this way in order to use await block below
-    async function getTeam() {
-      const response = await fetch(endpoint, {
+    async function getTeam(url) {
+      const response = await fetch(url, {
         // Obvious, but here to remind me how to include auth token in future
         method: "GET",
         headers: {
@@ -26,11 +29,16 @@
         throw new Error(team);
       }
     }
-  
-    // Reveals the data to the await block below
-    let promise = getTeam();
+    
+    afterUpdate(() => {
+      // ...the DOM is now in sync with the data
+      endpoint = `https://reqres.in/api/users?page=${teamNumber}`;
+    });
+    
+      // Reveals the data to the await block below (reacts when endpoint changes)
+      $: promise = getTeam(endpoint);
   </script>
-  
+
   {#await promise}
   <!-- Can put anything here to tell people data is incoming (super-handy!) -->
     <p>...waiting</p>
